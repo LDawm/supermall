@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="wrapper" ref="aaaa">
     <ul calss="content">
       <li>分类列表1</li>
@@ -103,24 +104,34 @@
       <li>分类列表100</li>
     </ul>
   </div>
+    <back-top  @click.native="backTop"></back-top>
+  </div>
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
+import BScroll from 'better-scroll'
+import {backTopMixin} from "../../common/mixin";
+import Scroll from "../../components/common/scroll/Scroll";
 
-  export default {
+export default {
     name: "Category",
-    data() {
+  components: {Scroll},
+  data() {
       return {
         scroll: null
       }
     },
+  methods: {
+
+  },
+  mixins: [backTopMixin],
     created() {
       // new BScroll('.content',{
       // })
     },
     mounted() {
-      this.scroll = new BScroll(document.querySelector('.wrapper'),{});
+      this.scroll = new BScroll(document.querySelector('.wrapper'),{
+      });
     }
   }
 </script>

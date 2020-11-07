@@ -36,7 +36,6 @@
 <style scoped>
 .tab-control {
   display: flex;
-  margin: -0.5px;
   text-align: center;
   font-size: 15px;
   height: 40px;

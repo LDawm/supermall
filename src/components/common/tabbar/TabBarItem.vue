@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import Scroll from "../scroll/Scroll";
   export default {
     name: "TabBarItem",
     props: {
