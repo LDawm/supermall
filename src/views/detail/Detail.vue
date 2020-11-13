@@ -10,8 +10,9 @@
     <detail-comment-info ref="comment" :comment-info="commentInfo"/>
     <goods-list ref="recommend" :goods = "recommends"/>
   </Scroll>
-  <detail-bottom-bar/>
+  <detail-bottom-bar @addCart="addToCart"/>
   <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
+  <toast message="hahha"/>
 </div>
 </template>
 
@@ -24,6 +25,7 @@
   import DetailParamInfo from "./childComps/DetailParamInfo";
   import DetailCommentInfo from "./childComps/DetailCommentInfo"
   import DetailBottomBar from "./childComps/DetailBottomBar";
+  import Toast from "components/common/toast/Toast";
 
   import Scroll from "components/common/scroll/Scroll";
   import GoodsList from "components/content/goods/GoodsList";
@@ -32,6 +34,8 @@
   import {GoodsParam} from "../../network/detail";
   import {debounce} from "common/utils";
   import {itemListenerMixin,backTopMixin} from "common/mixin";
+
+  import {mapActions} from "vuex"
 
   export default {
     name: "Detail",
@@ -46,6 +50,7 @@
       DetailCommentInfo,
       GoodsList,
       DetailBottomBar,
+      Toast
     },
     mixins: [itemListenerMixin,backTopMixin],
     data() {
@@ -122,6 +127,7 @@
       this.$bus.$off('itemImgLoad',this.itemImageListener)
     },
     methods: {
+      ...mapActions(['addCart']),
       imageLoad() {
         this.$refs.scroll.refresh()
         this.getThemeTopYs()
@@ -148,6 +154,23 @@
           }
         }
 
+      },
+      addToCart() {
+        const product = {}
+        product.image = this.topImages[0]
+        product.title = this.goods.title;
+        product.desc = this.goods.desc;
+        product.price = this.goods.realPrice;
+        product.iid = this.iid;
+        // this.$store.commit('addCart',product)
+        this.addCart(product).then(res => {
+          this.$toast.show(res,2000)
+        })
+
+
+        // this.$store.dispatch('addCart',product).then(res => {
+        //   console.log(res);
+        // })
       }
     }
   }

@@ -24,7 +24,12 @@
 
 <script>
   export default {
-    name: "DetailBottomBar"
+    name: "DetailBottomBar",
+    methods: {
+      addToCart() {
+        this.$emit('addCart')
+      }
+    }
   }
 </script>
 
@@ -71,7 +76,7 @@
   .bar-right {
     font-size: 15px;
     color: #fff;
-    line-height: 58px;
+    line-height: 49px;
   }
 
   .bar-right .cart {
